@@ -1967,16 +1967,20 @@ def api_app_version():
         return jsonify({'ok': True, 'data': curr})
     return jsonify({'ok': True, 'data': get_app_version_info()})
 
-@app.route('/api/updater/latest.json')
-def api_tauri_updater():
-    """Manifest resmi yang dikonsumsi oleh plugin Tauri Auto-Updater."""
-    info = get_app_version_info()
-    return jsonify({
-        "version": info.get("version", "2.1.0"),
-        "notes": "\n".join([f"- {n}" for n in info.get("notes", [])]),
-        "pub_date": info.get("pub_date", "2026-10-03T00:00:00Z"),
-        "platforms": info.get("platforms", {})
-    })
+@app.route('/launcher')
+def serve_launcher():
+    dist_file = os.path.join(os.path.dirname(__file__), 'dist_frontend', 'index.html')
+    if os.path.exists(dist_file):
+        with open(dist_file, 'r', encoding='utf-8') as f:
+            return f.read()
+    return "Launcher not found", 404
+
+@app.route('/launcher_bg.jpg')
+def serve_launcher_bg():
+    bg_path = os.path.join(os.path.dirname(__file__), 'dist_frontend', 'launcher_bg.jpg')
+    if os.path.exists(bg_path):
+        return send_file(bg_path, mimetype='image/jpeg')
+    return "Not found", 404
 
 if __name__ == "__main__":
     try:

@@ -34,48 +34,29 @@
     }
 
     body, html {
-      width: 100vw;
-      height: 100vh;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
       overflow: hidden;
       font-family: var(--font-main);
       color: var(--text-main);
-      background-color: transparent;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    /* Ambient Outer Cosmic Backdrop (Desktop Preview Mode) */
-    .launcher-outer-wrap {
-      width: 100vw;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: radial-gradient(circle at 50% 50%, rgba(139, 92, 246, 0.12) 0%, #05030a 100%);
-      padding: 16px;
+      background: transparent;
     }
 
     /* Floating SaaS Launcher Window */
     .launcher-window {
-      width: 100%;
-      max-width: 1200px;
-      height: 94vh;
-      max-height: 720px;
-      border-radius: 20px;
-      background-color: var(--bg-window);
+      width: 100vw;
+      height: 100vh;
+      border-radius: 18px;
+      border: 1px solid rgba(168, 85, 247, 0.32);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.75), 0 0 35px rgba(168, 85, 247, 0.16);
+      background-color: #0b0716;
       background-image:
-        linear-gradient(to right, rgba(14, 10, 26, 0.94) 0%, rgba(14, 10, 26, 0.85) 30%, rgba(14, 10, 26, 0.75) 100%),
+        linear-gradient(to right, rgba(11, 7, 22, 0.94) 0%, rgba(11, 7, 22, 0.85) 30%, rgba(11, 7, 22, 0.72) 100%),
         url('launcher_bg.jpg');
       background-size: cover;
       background-position: center right;
-      border: 1px solid var(--border-subtle);
-      box-shadow:
-        0 30px 80px rgba(0, 0, 0, 0.85),
-        0 0 50px rgba(168, 85, 247, 0.15),
-        inset 0 1px 0 rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(28px);
-      -webkit-backdrop-filter: blur(28px);
       display: flex;
       flex-direction: column;
       position: relative;
@@ -92,7 +73,7 @@
       border-bottom: 1px solid rgba(255, 255, 255, 0.04);
       -webkit-app-region: drag;
       cursor: grab;
-      z-index: 50;
+      z-index: 150;
     }
 
     .launcher-titlebar-left {
@@ -732,16 +713,16 @@
     }
   </style>
 </head>
-<body>
-
-<div class="launcher-outer-wrap">
-  <div class="launcher-window">
+<div class="launcher-window">
 
     <!-- Titlebar Drag Region -->
     <header class="launcher-titlebar" data-tauri-drag-region>
       <div class="launcher-titlebar-left">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
         <span>RKDKCW Audio Studio Launcher</span>
+        <button id="btn-back-to-launcher" style="display: none; margin-left: 12px; padding: 3px 10px; border-radius: 6px; background: rgba(168, 85, 247, 0.18); border: 1px solid rgba(168, 85, 247, 0.4); color: #c084fc; font-size: 11px; font-weight: 600; cursor: pointer; -webkit-app-region: no-drag;">
+          Kembali ke Launcher
+        </button>
       </div>
       <div class="launcher-window-controls">
         <button class="win-control-btn" id="btn-win-min" title="Minimize">
@@ -968,11 +949,7 @@
       </main>
     </div>
 
-    <!-- Embedded Studio Frame (Shown when studio is launched) -->
-    <iframe id="studioFrame" src="about:blank"></iframe>
-
   </div>
-</div>
 
 <script>
   // ── LOCAL & REMOTE CONFIGURATION ──
@@ -1166,6 +1143,7 @@
           const frame = document.getElementById('studioFrame');
           frame.src = LOCAL_STUDIO_URL;
           frame.style.display = 'block';
+          document.getElementById('btn-back-to-launcher').style.display = 'inline-flex';
           return;
         }
       } catch(e) {}
@@ -1177,10 +1155,17 @@
         const frame = document.getElementById('studioFrame');
         frame.src = LOCAL_STUDIO_URL;
         frame.style.display = 'block';
+        document.getElementById('btn-back-to-launcher').style.display = 'inline-flex';
       }
     };
     checkEngine();
   }
+
+  // ── BACK TO LAUNCHER BUTTON ──
+  document.getElementById('btn-back-to-launcher').addEventListener('click', () => {
+    document.getElementById('studioFrame').style.display = 'none';
+    document.getElementById('btn-back-to-launcher').style.display = 'none';
+  });
 
   // ── BROWSE FOLDER BUTTON ──
   document.getElementById('btn-browse-folder').addEventListener('click', () => {
