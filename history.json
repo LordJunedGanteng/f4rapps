@@ -1,0 +1,78 @@
+[
+  {
+    "user_id": "Guest_6bmd",
+    "title": "web_upload_36gpt96i",
+    "source": "upload",
+    "mode": "bypassed",
+    "speed": 2.253,
+    "amplify": -2,
+    "url": "",
+    "duration": 147.513,
+    "size": 4112540,
+    "files": 1,
+    "ts": "2026-10-03T00:28:13.323866"
+  },
+  {
+    "user_id": "Guest_rqqv",
+    "title": "Queue: 4 lagu (bypassed)",
+    "source": "queue",
+    "mode": "bypassed",
+    "duration": 0,
+    "size": 24994122,
+    "files": 4,
+    "ts": "2026-10-03T00:23:41.210668"
+  },
+  {
+    "user_id": "Guest_67l2",
+    "title": "Queue: 4 lagu (bypassed)",
+    "source": "queue",
+    "mode": "bypassed",
+    "duration": 0,
+    "size": 18826146,
+    "files": 4,
+    "ts": "2026-10-02T23:43:18.546728"
+  },
+  {
+    "user_id": "Guest_3c52",
+    "title": "Playlist: Best Free 4K VJ LOOPS 2026 (100/100)",
+    "source": "youtube",
+    "mode": "playlist_video",
+    "duration": 0,
+    "size": 936113115,
+    "files": 100,
+    "ts": "2026-09-29T12:52:48.920207"
+  },
+  {
+    "user_id": "Guest_6nyp",
+    "title": "Me at the zoo",
+    "source": "youtube",
+    "mode": "video_360",
+    "duration": 19,
+    "size": 629172,
+    "files": 1,
+    "ts": "2026-09-29T12:19:05.400452"
+  },
+  {
+    "user_id": "Guest_9h3x",
+    "title": "Me at the zoo",
+    "source": "youtube",
+    "mode": "normal",
+    "speed": 1.0,
+    "amplify": 0.0,
+    "url": "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+    "duration": 19,
+    "size": 456548,
+    "files": 1,
+    "ts": "2026-09-29T12:18:51.217226"
+  },
+  {
+    "user_id": "Guest_8v7o",
+    "title": "Playlist: Best Free 4K VJ LOOPS 2026 (100/100)",
+    "source": "youtube",
+    "mode": "playlist_video",
+    "duration": 0,
+    "size": 936113115,
+    "files": 100,
+    "ts": "2026-09-29T12:11:06.290488"
+  }
+]

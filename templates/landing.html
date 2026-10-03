@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RKDKCW : Next-Gen Audio Processor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background-color: #000000;
+      color: #ffffff;
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.5;
+    }
+
+    /* Header / Navigation */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 50;
+      border-bottom: 1px solid rgba(31, 41, 55, 0.5);
+      background-color: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    nav {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    .nav-logo {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #ffffff;
+      text-decoration: none;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-links {
+      display: none;
+    }
+
+    @media (min-width: 768px) {
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    .nav-link {
+      font-size: 0.875rem;
+      color: rgba(255, 255, 255, 0.6);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .nav-link:hover {
+      color: #ffffff;
+    }
+
+    .nav-actions {
+      display: none;
+      align-items: center;
+      gap: 16px;
+    }
+
+    @media (min-width: 768px) {
+      .nav-actions {
+        display: flex;
+      }
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      white-space: nowrap;
+      border-radius: 6px;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      text-decoration: none;
+      border: none;
+      outline: none;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: #ffffff;
+      height: 40px;
+      padding: 0 20px;
+      font-size: 0.875rem;
+    }
+
+    .btn-ghost:hover {
+      background: rgba(31, 41, 55, 0.5);
+    }
+
+    .btn-default {
+      background: linear-gradient(135deg, #a855f7, #7c3aed);
+      color: #ffffff;
+      height: 40px;
+      padding: 0 20px;
+      font-size: 0.875rem;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 0 20px rgba(168, 85, 247, 0.35);
+    }
+
+    .btn-default:hover {
+      background: linear-gradient(135deg, #c084fc, #9333ea);
+      box-shadow: 0 0 25px rgba(168, 85, 247, 0.55);
+    }
+
+    .btn-gradient {
+      background: linear-gradient(135deg, #c084fc 0%, #a855f7 40%, #7c3aed 100%);
+      color: #ffffff;
+      height: 48px;
+      padding: 0 32px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      box-shadow: 0 0 35px rgba(168, 85, 247, 0.6), 0 4px 15px rgba(0, 0, 0, 0.4);
+    }
+
+    .btn-gradient:hover {
+      transform: scale(1.05);
+      background: linear-gradient(135deg, #d8b4fe 0%, #a855f7 35%, #6d28d9 100%);
+      box-shadow: 0 0 50px rgba(192, 132, 252, 0.85), 0 6px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .btn-gradient:active {
+      transform: scale(0.95);
+    }
+
+    .mobile-menu-btn {
+      display: block;
+      background: transparent;
+      border: none;
+      color: #ffffff;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    @media (min-width: 768px) {
+      .mobile-menu-btn {
+        display: none;
+      }
+    }
+
+    /* Hero Section */
+    .hero-section {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 130px 24px 80px 24px;
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Pill badge */
+    .pill-badge {
+      margin-bottom: 32px;
+      display: inline-flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 9999px;
+      border: 1px solid rgba(168, 85, 247, 0.4);
+      background: rgba(139, 92, 246, 0.1);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      max-width: 100%;
+    }
+
+    .pill-text {
+      font-size: 0.75rem;
+      text-align: center;
+      white-space: nowrap;
+      color: #c084fc;
+    }
+
+    .pill-action {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.75rem;
+      color: #d8b4fe;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .pill-action:hover {
+      color: #ffffff;
+    }
+
+    .pill-action:active {
+      transform: scale(0.95);
+    }
+
+    /* Headline */
+    .hero-headline {
+      font-size: clamp(2.25rem, 5vw, 3.75rem);
+      font-weight: 500;
+      text-align: center;
+      max-width: 48rem;
+      padding: 0 24px;
+      line-height: 1.15;
+      margin-bottom: 24px;
+      background: linear-gradient(to bottom, #ffffff, #ffffff, rgba(255, 255, 255, 0.6));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.05em;
+    }
+
+    .hero-subtext {
+      font-size: clamp(0.875rem, 2vw, 1rem);
+      text-align: center;
+      max-width: 42rem;
+      padding: 0 24px;
+      margin-bottom: 40px;
+      color: #9ca3af;
+      line-height: 1.6;
+    }
+
+    .cta-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      position: relative;
+      z-index: 10;
+      margin-bottom: 64px;
+    }
+
+    /* Mockup Container with Backlight Glow */
+    .mockup-container {
+      width: 100%;
+      max-width: 1024px;
+      position: relative;
+      padding-bottom: 80px;
+    }
+
+    .mockup-backlight {
+      position: absolute;
+      left: 50%;
+      width: 90%;
+      top: -23%;
+      transform: translateX(-50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .mockup-backlight img {
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: hue-rotate(245deg) saturate(3.5) brightness(1.25);
+    }
+
+    .mockup-backlight::after {
+      content: '';
+      position: absolute;
+      left: 10%;
+      right: 10%;
+      top: 15%;
+      bottom: 20%;
+      background: radial-gradient(ellipse at 50% 50%, rgba(168, 85, 247, 0.65) 0%, rgba(139, 92, 246, 0.35) 50%, transparent 75%);
+      filter: blur(45px);
+      pointer-events: none;
+    }
+
+    .mockup-image-wrap {
+      position: relative;
+      z-index: 10;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+    }
+
+    .mockup-image-wrap img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 8px;
+    }
+
+    /* Mobile menu overlay */
+    .mobile-menu {
+      display: none;
+      background: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-top: 1px solid rgba(31, 41, 55, 0.5);
+      padding: 16px 24px;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .mobile-menu.open {
+      display: flex;
+      animation: slideDown 0.3s ease-out;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header>
+    <nav>
+      <a href="/" class="nav-logo">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>
+        </svg>
+        <span>RKDKCW</span>
+      </a>
+
+      <div class="nav-links">
+        <a href="/app" class="nav-link">Studio Dashboard</a>
+        <a href="/oauth/login" class="nav-link">Roblox Auth</a>
+        <a href="/app" class="nav-link">Queue Engine</a>
+      </div>
+
+      <div class="nav-actions">
+        <a href="/app" class="btn btn-ghost">Dashboard</a>
+        <a href="/app" class="btn btn-default">Get Started</a>
+      </div>
+
+      <button type="button" class="mobile-menu-btn" id="mobile-toggle" aria-label="Toggle menu">
+        <svg id="menu-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="4" x2="20" y1="12" y2="12" />
+          <line x1="4" x2="20" y1="6" y2="6" />
+          <line x1="4" x2="20" y1="18" y2="18" />
+        </svg>
+      </button>
+    </nav>
+
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="/app" class="nav-link">Studio Dashboard</a>
+      <a href="/oauth/login" class="nav-link">Roblox Auth</a>
+      <a href="/app" class="nav-link">Queue Engine</a>
+      <div style="padding-top: 12px; border-top: 1px solid rgba(31, 41, 55, 0.5); display: flex; flex-direction: column; gap: 8px;">
+        <a href="/app" class="btn btn-default" style="width: 100%;">Get Started</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <main>
+    <section class="hero-section">
+      <!-- Pill Badge -->
+      <aside class="pill-badge">
+        <span class="pill-text">RKDKCW Audio Engine v5.2 is live!</span>
+        <a href="/app" class="pill-action" aria-label="Launch studio dashboard">
+          <span>Launch Studio</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14" />
+            <path d="m12 5 7 7-7 7" />
+          </svg>
+        </a>
+      </aside>
+
+      <!-- Headline -->
+      <h1 class="hero-headline">
+        Process, bypass & upload <br />audio to Roblox instantly
+      </h1>
+
+      <!-- Subtext -->
+      <p class="hero-subtext">
+        High-performance audio processing platform with YouTube & SoundCloud extraction, <br />automatic 15-minute splitter, and direct bulk Roblox uploader.
+      </p>
+
+      <!-- Single Primary Action -->
+      <div class="cta-wrapper">
+        <a href="/app" class="btn btn-gradient" aria-label="Get started with the studio">
+          Get started
+        </a>
+      </div>
+
+      <!-- Mockup with Ambient Backlight Glow -->
+      <div class="mockup-container">
+        <div class="mockup-backlight" aria-hidden="true">
+          <img
+            src="https://cdn.21st.dev/assets/mirror/ab/abe6d8090cc14780b846eee062024e4e03274c99d38188554239cd312a7180fa.png"
+            alt=""
+            loading="eager"
+          />
+        </div>
+
+        <div class="mockup-image-wrap">
+          <img
+            src="/static/dashboard_preview.png"
+            alt="Audio Bypass Dashboard preview"
+            loading="eager"
+          />
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Mobile Menu Toggle
+    const mobileToggle = document.getElementById('mobile-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    if (mobileToggle && mobileMenu) {
+      mobileToggle.addEventListener('click', () => {
+        mobileMenu.classList.toggle('open');
+      });
+    }
+  </script>
+</body>
+</html>

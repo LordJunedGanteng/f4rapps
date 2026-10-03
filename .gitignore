@@ -1,0 +1,32 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# PyInstaller build artifacts
+build/
+dist/
+*.spec
+
+# User temporary downloads
+downloads/
+temp_audio/
+*.ogg
+*.mp3
+*.wav
+*.mp4
+*.zip
+
+# Virtual Environments
+.venv/
+venv/
+ENV/
+env/
+
+# Logs & Secrets
+crash_log.txt
+*.log
+cookies.txt
+.env
+.DS_Store
+Thumbs.db
