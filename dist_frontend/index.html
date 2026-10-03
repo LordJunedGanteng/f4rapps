@@ -1122,50 +1122,50 @@
   }
 
   // ── LAUNCH STUDIO ──
+  let isLaunching = false; // debounce: prevent multiple concurrent polling loops
+
   async function launchStudio() {
+    if (isLaunching) return; // already in progress
+    isLaunching = true;
+
     const actText = document.getElementById('progress-action-text');
-    actText.textContent = "Starting Studio Engine & Opening Workspace...";
+    const btnAction = document.getElementById('btn-primary-action');
+    btnAction.disabled = true;
+    actText.textContent = "Memulai Studio Engine...";
 
     // Fire backend launch (non-blocking, fire-and-forget)
     if (window.__TAURI__ && window.__TAURI__.core) {
       window.__TAURI__.core.invoke('launch_studio_engine').catch(() => {});
     }
 
-    // Start polling immediately — don't wait for invoke to complete
+    // Poll until Flask is up, then navigate directly (no iframe — cross-origin blocked in Tauri)
     let attempts = 0;
     const checkEngine = async () => {
       attempts++;
       try {
         const res = await fetch("http://127.0.0.1:5000/api/app/version", { cache: "no-store" });
         if (res.ok) {
-          const frame = document.getElementById('studioFrame');
-          frame.src = LOCAL_STUDIO_URL;
-          frame.style.display = 'block';
-          document.getElementById('btn-back-to-launcher').style.display = 'inline-flex';
-          actText.textContent = "Engine Ready · RKDKCW Studio v2.1.1";
+          actText.textContent = "Engine Ready. Membuka Studio...";
+          // Navigate the whole webview to studio — works in both browser and Tauri
+          setTimeout(() => { window.location.href = LOCAL_STUDIO_URL; }, 300);
           return;
         }
       } catch(e) {}
 
-      if (attempts < 20) {
+      if (attempts < 150) {
+        if (attempts % 5 === 0) {
+          actText.textContent = `Memulai Studio Engine... ${Math.round(attempts * 0.2)}s`;
+        }
         setTimeout(checkEngine, 200);
       } else {
-        // Fallback open in frame directly
-        const frame = document.getElementById('studioFrame');
-        frame.src = LOCAL_STUDIO_URL;
-        frame.style.display = 'block';
-        document.getElementById('btn-back-to-launcher').style.display = 'inline-flex';
-        actText.textContent = "Engine Ready · RKDKCW Studio v2.1.1";
+        actText.textContent = "Engine gagal start. Cek crash_log.txt atau restart launcher.";
+        isLaunching = false;
+        btnAction.disabled = false;
       }
     };
     checkEngine();
   }
 
-  // ── BACK TO LAUNCHER BUTTON ──
-  document.getElementById('btn-back-to-launcher').addEventListener('click', () => {
-    document.getElementById('studioFrame').style.display = 'none';
-    document.getElementById('btn-back-to-launcher').style.display = 'none';
-  });
 
   // ── BROWSE FOLDER BUTTON ──
   document.getElementById('btn-browse-folder').addEventListener('click', () => {
