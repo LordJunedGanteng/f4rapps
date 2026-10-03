@@ -6,27 +6,32 @@ Studio Audio Bypass Roblox & Uploader Otomatis berbasis *Multi-Band Spectral Pha
 
 ---
 
-### Download Installer (.exe)
+### Download Windows Installer (.exe)
 
-Silakan unduh versi terbaru yang siap pakai langsung tanpa perlu instal Python:
+Unduh installer lokal Windows resmi (Setup Wizard) tanpa perlu install Python:
 
-[![Download Latest Release](https://img.shields.io/badge/Download-RKDKCW__Launcher.exe%20(v2.1.0)-a855f7?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/LordJunedGanteng/f4rapps/releases/latest)
+[![Download Latest Release](https://img.shields.io/badge/Download-RKDKCW__Audio__Studio__Setup__v2.1.0.exe-a855f7?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/LordJunedGanteng/f4rapps/releases/latest)
 
 > Link Alternatif: [Buka Halaman GitHub Releases](https://github.com/LordJunedGanteng/f4rapps/releases)
 
 ---
 
-### Cara Pakai
+### Cara Pasang (Instalasi Lokal)
 
-1. **Download** file `RKDKCW_Audio_Studio.zip` atau `RKDKCW_Launcher.exe` dari tautan di atas.
-2. **Ekstrak** arsip ke folder komputer Anda.
-3. **Buka / Klik 2x `RKDKCW_Launcher.exe`**:
-   - Launcher memeriksa pembaruan secara otomatis.
-   - Server berjalan di latar belakang dan langsung membuka dashboard studio pada browser (`http://127.0.0.1:5000/app`).
+1. **Unduh** file installer `RKDKCW_Audio_Studio_Setup_v2.1.0.exe`.
+2. **Jalankan Installer**:
+   - Klik 2x file installer untuk memulai wizard pemasangan.
+   - Pilih direktori instalasi lokal dan centang opsi **Create a desktop shortcut** jika ingin ikon di Desktop.
+   - Klik **Install**.
+3. **Selesai & Jalankan**:
+   - Centang **Launch RKDKCW Audio Studio** dan klik **Finish**.
+   - Studio akan otomatis terbuka di browser dan siap digunakan.
+   - Aplikasi juga dapat dibuka kapan saja melalui shortcut Desktop maupun Start Menu Windows.
 
 ---
 
 ### Fitur Utama
+- **Instalasi Lokal Windows**: Dilengkapi Setup Wizard resmi, shortcut Desktop, menu Start, dan uninstaller bersih di Windows Settings.
 - **Roblox Bypass**: Tingkat lolos verifikasi moderasi audio 99.8%.
 - **Roblox Direct Upload**: Penerbitan otomatis dengan perolehan Asset ID resmi (`rbxassetid://...`).
 - **Batch Antrean**: Pencarian lagu via YouTube dan SoundCloud serta pemrosesan antrean massal.
@@ -34,3 +39,4 @@ Silakan unduh versi terbaru yang siap pakai langsung tanpa perlu instal Python:
 
 ---
 RKDKCW Frameworks · [LordJunedGanteng](https://github.com/LordJunedGanteng)
+
