@@ -2,7 +2,7 @@
 ; RKDKCW Audio Studio - Local Windows Setup Installer (Native Tauri Desktop App)
 
 #define MyAppName "RKDKCW Audio Studio"
-#define MyAppVersion "2.1.0"
+#define MyAppVersion "2.1.1"
 #define MyAppPublisher "RKDKCW Studios"
 #define MyAppURL "https://github.com/LordJunedGanteng/f4rapps"
 #define MyAppExeName "RKDKCW_Audio_Studio_Desktop.exe"
@@ -21,7 +21,7 @@ PrivilegesRequiredOverridesAllowed=dialog
 DefaultGroupName={#MyAppName}
 DisableProgramGroupPage=yes
 OutputDir=dist
-OutputBaseFilename=RKDKCW_Audio_Studio_Setup_v2.1.0
+OutputBaseFilename=RKDKCW_Audio_Studio_Setup_v2.1.1
 SetupIconFile=app_icon.ico
 Compression=lzma2/ultra64
 SolidCompression=yes

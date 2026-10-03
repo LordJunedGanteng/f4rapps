@@ -1,22 +1,22 @@
 {
-  "version": "2.1.0",
+  "version": "2.1.1",
   "min_version": "2.0.0",
-  "current_client_version": "2.0.4",
-  "pub_date": "2026-10-03T01:50:00Z",
+  "current_client_version": "2.1.0",
+  "pub_date": "2026-10-03T05:45:00Z",
   "force_update": false,
-  "title": "Pembaruan RKDKCW Studio v2.1.0",
+  "title": "Pembaruan RKDKCW Studio v2.1.1",
   "notes": [
-    "Pembaruan Algoritma Bypass Audio Multi-Band Phase Modulation v3.2",
-    "Peningkatan Kecepatan Upload & Auto-Detect Roblox Open Cloud",
-    "Dukungan Penuh Tauri Desktop Auto-Updater Engine",
-    "Optimasi Tampilan Dashboard Purple & Animasi Smooth Motion"
+    "Perbaikan Bug Scaling UI: Sumber Audio buttons tidak lagi overflow keluar kartu",
+    "Auto-Fit Dynamic Layout: Responsif penuh di resolusi laptop (1366x768) dan layar sempit",
+    "Perbaikan KPI Stat Cards: Text sub-keterangan tidak lagi terpotong vertikal per-kata",
+    "Optimasi Grid Workspace: Kolom samping hanya aktif saat ada hasil konversi atau riwayat"
   ],
-  "download_url": "https://github.com/RKDKCW/audio-bypass/releases/latest",
-  "file_size": "34.8 MB",
+  "download_url": "https://github.com/LordJunedGanteng/f4rapps/releases/latest",
+  "file_size": "24.6 MB",
   "platforms": {
     "windows-x86_64": {
       "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6...",
-      "url": "https://github.com/RKDKCW/audio-bypass/releases/download/v2.1.0/RKDKCW_Setup_x64.msi.zip"
+      "url": "https://github.com/LordJunedGanteng/f4rapps/releases/download/v2.1.1/RKDKCW_Audio_Studio_Setup_v2.1.1.exe"
     }
   }
 }
