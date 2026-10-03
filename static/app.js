@@ -618,6 +618,7 @@
     document.getElementById('log-wrap').style.display = 'none';
     document.getElementById('roblox-card').style.display = 'none';
     document.getElementById('roblox-text').innerHTML = '';
+    if (typeof updateAsideLayout === 'function') updateAsideLayout();
   }
   function clearErrors() {
     document.querySelectorAll('.error-toast').forEach(e => e.remove());
@@ -697,6 +698,7 @@
     const list = document.getElementById('file-list');
     list.innerHTML = '';
     rc.style.display = 'block';
+    if (typeof updateAsideLayout === 'function') updateAsideLayout();
 
     const mixtapeParts = window._lastMixtapeParts;
     const isMixtape = mixtapeParts && mixtapeParts.length > 0;
@@ -1223,7 +1225,7 @@
     const list = rbxHistLoad();
     const card = document.getElementById('rbx-history-card');
     const ul   = document.getElementById('rbx-history-list');
-    if (!list.length) { card.style.display = 'none'; return; }
+    if (!list.length) { card.style.display = 'none'; if (typeof updateAsideLayout === 'function') updateAsideLayout(); return; }
     card.style.display = 'block';
     ul.innerHTML = '';
     list.forEach(e => {
@@ -1233,6 +1235,7 @@
       div.innerHTML = rbxHistItemHtml(e);
       ul.appendChild(div);
     });
+    if (typeof updateAsideLayout === 'function') updateAsideLayout();
   }
 
   function resumeRbxPolls() {
@@ -1247,7 +1250,7 @@
       const data = await res.json();
       const card = document.getElementById('history-card');
       const list = document.getElementById('history-list');
-      if (!data.length) { card.style.display = 'none'; return; }
+      if (!data.length) { card.style.display = 'none'; if (typeof updateAsideLayout === 'function') updateAsideLayout(); return; }
       card.style.display = 'block';
       list.innerHTML = '';
       data.forEach(h => {
@@ -1269,6 +1272,7 @@
         `;
         list.appendChild(div);
       });
+      if (typeof updateAsideLayout === 'function') updateAsideLayout();
     } catch { /* silent */ }
   }
   loadHistory();
@@ -1279,12 +1283,54 @@
   document.getElementById('btn-clear-history').addEventListener('click', async () => {
     await fetch('/api/history', { method: 'DELETE' });
     document.getElementById('history-card').style.display = 'none';
+    if (typeof updateAsideLayout === 'function') updateAsideLayout();
   });
 
   document.getElementById('btn-clear-rbx-history').addEventListener('click', () => {
     localStorage.removeItem(RBX_HIST_KEY);
     document.getElementById('rbx-history-card').style.display = 'none';
+    if (typeof updateAsideLayout === 'function') updateAsideLayout();
   });
+
+  // ── DYNAMIC ASIDE & RESPONSIVE WORKSPACE LAYOUT ──
+  function updateAsideLayout() {
+    const aside = document.querySelector('.dash-panel-aside');
+    const layout = document.querySelector('.dash-workspace-layout');
+    if (!aside || !layout) return;
+
+    const activeBtn = document.querySelector('.dash-nav-btn.active, .dash-sidebar-nav .nav-tab-item.active');
+    const tabName = activeBtn ? (activeBtn.getAttribute('data-tab') || activeBtn.dataset.navtab) : currentNavTab || 'overview';
+
+    if (tabName === 'overview' || tabName === 'settings' || tabName === 'queue') {
+      aside.style.display = 'none';
+      aside.classList.remove('is-visible');
+      layout.classList.remove('has-aside');
+      layout.style.gridTemplateColumns = 'minmax(0, 1fr)';
+      return;
+    }
+
+    const rc = document.getElementById('results-card');
+    const hc = document.getElementById('history-card');
+    const rhc = document.getElementById('rbx-history-card');
+
+    const isRcVisible = rc && rc.style.display !== 'none' && rc.style.display !== '';
+    const isHcVisible = hc && hc.style.display !== 'none' && hc.style.display !== '';
+    const isRhcVisible = rhc && rhc.style.display !== 'none' && rhc.style.display !== '';
+
+    const hasVisibleCards = isRcVisible || isHcVisible || isRhcVisible;
+
+    if (hasVisibleCards) {
+      aside.style.display = 'flex';
+      aside.classList.add('is-visible');
+      layout.classList.add('has-aside');
+      layout.style.gridTemplateColumns = '';
+    } else {
+      aside.style.display = 'none';
+      aside.classList.remove('is-visible');
+      layout.classList.remove('has-aside');
+      layout.style.gridTemplateColumns = 'minmax(0, 1fr)';
+    }
+  }
 
   // ─────────────────────────────────────────────
   //  21ST.DEV NAVIGATION TABS CONTROLLER
@@ -1329,19 +1375,7 @@
       }
     });
 
-    const panelAside = document.querySelector('.dash-panel-aside');
-    if (panelAside) {
-      panelAside.style.display = tabName === 'overview' ? 'none' : 'flex';
-      if (tabName !== 'overview') {
-        panelAside.classList.remove('smooth-panel-motion');
-        void panelAside.offsetWidth;
-        panelAside.classList.add('smooth-panel-motion');
-      }
-    }
-    const workspaceLayout = document.querySelector('.dash-workspace-layout');
-    if (workspaceLayout) {
-      workspaceLayout.style.gridTemplateColumns = tabName === 'overview' ? '1fr' : '';
-    }
+    updateAsideLayout();
 
     clearResults();
     clearErrors();
