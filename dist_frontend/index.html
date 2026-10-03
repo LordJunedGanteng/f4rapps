@@ -1126,14 +1126,12 @@
     const actText = document.getElementById('progress-action-text');
     actText.textContent = "Starting Studio Engine & Opening Workspace...";
 
-    // If Tauri is available, trigger backend start
+    // Fire backend launch (non-blocking, fire-and-forget)
     if (window.__TAURI__ && window.__TAURI__.core) {
-      try {
-        await window.__TAURI__.core.invoke('launch_studio_engine');
-      } catch(e) {}
+      window.__TAURI__.core.invoke('launch_studio_engine').catch(() => {});
     }
 
-    // Connect to Flask backend
+    // Start polling immediately — don't wait for invoke to complete
     let attempts = 0;
     const checkEngine = async () => {
       attempts++;

@@ -80,7 +80,10 @@ fn app_close(window: tauri::Window) {
 
 #[tauri::command]
 fn launch_studio_engine() -> Result<bool, String> {
-    launch_backend_if_needed();
+    // Spawn in detached thread so IPC returns immediately — never block the WebView
+    std::thread::spawn(|| {
+        launch_backend_if_needed();
+    });
     Ok(true)
 }
 
