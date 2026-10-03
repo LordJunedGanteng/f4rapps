@@ -1,11 +1,11 @@
 ; Script generated for Inno Setup 6
-; RKDKCW Audio Studio - Local Windows Setup Installer
+; RKDKCW Audio Studio - Local Windows Setup Installer (Native Tauri Desktop App)
 
 #define MyAppName "RKDKCW Audio Studio"
 #define MyAppVersion "2.1.0"
 #define MyAppPublisher "RKDKCW Studios"
 #define MyAppURL "https://github.com/LordJunedGanteng/f4rapps"
-#define MyAppExeName "RKDKCW_Audio_Studio.exe"
+#define MyAppExeName "RKDKCW_Audio_Studio_Desktop.exe"
 
 [Setup]
 AppId={{D37E6F89-A512-4C10-9F1B-RKDKCW002100}

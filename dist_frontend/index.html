@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RKDKCW Audio Studio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            user-select: none;
+        }
+        body, html {
+            background-color: #0b0813;
+            color: #ffffff;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            text-align: center;
+            max-width: 440px;
+            padding: 40px;
+            background: rgba(18, 14, 30, 0.7);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 40px rgba(139, 92, 246, 0.1);
+            backdrop-filter: blur(16px);
+            transition: opacity 0.3s ease;
+        }
+        .brand-icon {
+            width: 72px;
+            height: 72px;
+            margin: 0 auto 20px auto;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(124, 58, 237, 0.05));
+            border: 1px solid rgba(168, 85, 247, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 24px rgba(139, 92, 246, 0.25);
+        }
+        .waveform {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            height: 32px;
+        }
+        .waveform-bar {
+            width: 4px;
+            border-radius: 2px;
+            background: linear-gradient(to top, #7c3aed, #c084fc);
+            animation: bounce 1.2s ease-in-out infinite alternate;
+        }
+        .waveform-bar:nth-child(1) { height: 12px; animation-delay: 0.1s; }
+        .waveform-bar:nth-child(2) { height: 22px; animation-delay: 0.2s; }
+        .waveform-bar:nth-child(3) { height: 30px; animation-delay: 0.3s; }
+        .waveform-bar:nth-child(4) { height: 18px; animation-delay: 0.4s; }
+        .waveform-bar:nth-child(5) { height: 10px; animation-delay: 0.5s; }
+
+        @keyframes bounce {
+            0% { transform: scaleY(0.4); opacity: 0.6; }
+            100% { transform: scaleY(1.0); opacity: 1; }
+        }
+
+        h1 {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #ffffff 30%, #c084fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+        .subtitle {
+            font-size: 13px;
+            color: #94a3b8;
+            margin-bottom: 28px;
+            letter-spacing: 0.5px;
+        }
+        .progress-track {
+            width: 100%;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 3px;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 14px;
+        }
+        .progress-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 40%;
+            background: linear-gradient(90deg, #9333ea, #a855f7, #38bdf8);
+            border-radius: 3px;
+            animation: progress-slide 1.4s infinite ease-in-out;
+        }
+        @keyframes progress-slide {
+            0% { left: -40%; width: 30%; }
+            50% { width: 60%; }
+            100% { left: 100%; width: 30%; }
+        }
+        .status-text {
+            font-size: 12px;
+            color: #a855f7;
+            font-weight: 500;
+            min-height: 18px;
+        }
+        .footer-note {
+            margin-top: 24px;
+            font-size: 11px;
+            color: #64748b;
+            letter-spacing: 0.5px;
+        }
+        .btn-retry {
+            display: none;
+            margin-top: 16px;
+            padding: 8px 20px;
+            background: #9333ea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-retry:hover {
+            background: #a855f7;
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.5);
+        }
+        #appFrame {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            border: none;
+            display: none;
+            z-index: 1000;
+            background: #0b0813;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="splash">
+        <div class="brand-icon">
+            <div class="waveform">
+                <div class="waveform-bar"></div>
+                <div class="waveform-bar"></div>
+                <div class="waveform-bar"></div>
+                <div class="waveform-bar"></div>
+                <div class="waveform-bar"></div>
+            </div>
+        </div>
+        <h1>RKDKCW Audio Studio</h1>
+        <p class="subtitle">Multi-Band Phase Modulation Engine</p>
+
+        <div class="progress-track">
+            <div class="progress-fill"></div>
+        </div>
+        <div class="status-text" id="statusMsg">Menghubungkan ke Studio Engine...</div>
+        <button class="btn-retry" id="btnRetry" onclick="checkConnection()">Hubungkan Ulang</button>
+
+        <div class="footer-note">RKDKCW Frameworks · Desktop App v2.1.0</div>
+    </div>
+
+    <iframe id="appFrame" src="about:blank"></iframe>
+
+    <script>
+        const TARGET_URL = "http://127.0.0.1:5000/app";
+        const API_HEALTH = "http://127.0.0.1:5000/api/version";
+        let attempts = 0;
+        const maxAttempts = 60;
+
+        async function checkConnection() {
+            attempts++;
+            document.getElementById("statusMsg").innerText = "Menghubungkan ke Studio Engine...";
+            document.getElementById("btnRetry").style.display = "none";
+
+            try {
+                const response = await fetch(API_HEALTH, { cache: "no-store", mode: "cors" });
+                if (response.ok) {
+                    document.getElementById("statusMsg").innerText = "Engine Terhubung! Membuka Studio...";
+                    const frame = document.getElementById("appFrame");
+                    frame.src = TARGET_URL;
+                    frame.onload = () => {
+                        frame.style.display = "block";
+                        const splash = document.getElementById("splash");
+                        if (splash) splash.style.display = "none";
+                    };
+                    // Fallback to display frame after 500ms
+                    setTimeout(() => {
+                        frame.style.display = "block";
+                        const splash = document.getElementById("splash");
+                        if (splash) splash.style.display = "none";
+                    }, 600);
+                    return;
+                }
+            } catch (err) {
+                // Engine still booting
+            }
+
+            if (attempts < maxAttempts) {
+                setTimeout(checkConnection, 500);
+            } else {
+                document.getElementById("statusMsg").innerText = "Gagal menghubungi engine lokal di port 5000.";
+                document.getElementById("btnRetry").style.display = "inline-block";
+            }
+        }
+
+        window.addEventListener("DOMContentLoaded", () => {
+            checkConnection();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "RKDKCW Audio Studio",
+  "version": "2.1.0",
+  "identifier": "com.rkdkcw.audiostudio",
+  "build": {
+    "frontendDist": "../dist_frontend"
+  },
+  "app": {
+    "windows": [
+      {
+        "label": "main",
+        "title": "RKDKCW Audio Studio",
+        "url": "http://127.0.0.1:5000/app",
+        "width": 1320,
+        "height": 840,
+        "minWidth": 1000,
+        "minHeight": 650,
+        "resizable": true,
+        "fullscreen": false,
+        "center": true,
+        "theme": "Dark"
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.ico"
+    ]
+  }
+}

@@ -6,33 +6,36 @@ Studio Audio Bypass Roblox & Uploader Otomatis berbasis *Multi-Band Spectral Pha
 
 ---
 
-### Download Windows Installer (.exe)
+### Download Aplikasi Desktop (.exe)
 
-Unduh installer lokal Windows resmi (Setup Wizard) tanpa perlu install Python:
+Tersedia versi aplikasi desktop mandiri (Tauri Native Desktop Window) yang berjalan langsung di jendela aplikasi tersendiri tanpa membuka browser:
 
-[![Download Latest Release](https://img.shields.io/badge/Download-RKDKCW__Audio__Studio__Setup__v2.1.0.exe-a855f7?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/LordJunedGanteng/f4rapps/releases/latest)
+[![Download Setup Installer](https://img.shields.io/badge/Download-RKDKCW__Audio__Studio__Setup__v2.1.0.exe-a855f7?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/LordJunedGanteng/f4rapps/releases/latest)
 
-> Link Alternatif: [Buka Halaman GitHub Releases](https://github.com/LordJunedGanteng/f4rapps/releases)
+> Opsi Unduhan:
+> - **Setup Installer Wizard**: `RKDKCW_Audio_Studio_Setup_v2.1.0.exe` (Pemasangan resmi, ikon Desktop & Start Menu, Uninstaller)
+> - **Portable Desktop App**: `RKDKCW_Audio_Studio_Desktop.exe` (Langsung jalan tanpa install)
+> - **Halaman Rilis**: [Buka GitHub Releases](https://github.com/LordJunedGanteng/f4rapps/releases)
 
 ---
 
-### Cara Pasang (Instalasi Lokal)
+### Cara Pasang & Menjalankan
 
-1. **Unduh** file installer `RKDKCW_Audio_Studio_Setup_v2.1.0.exe`.
-2. **Jalankan Installer**:
-   - Klik 2x file installer untuk memulai wizard pemasangan.
-   - Pilih direktori instalasi lokal dan centang opsi **Create a desktop shortcut** jika ingin ikon di Desktop.
-   - Klik **Install**.
-3. **Selesai & Jalankan**:
-   - Centang **Launch RKDKCW Audio Studio** dan klik **Finish**.
-   - Studio akan otomatis terbuka di browser dan siap digunakan.
-   - Aplikasi juga dapat dibuka kapan saja melalui shortcut Desktop maupun Start Menu Windows.
+1. **Jalankan Installer / Aplikasi**:
+   - Untuk instalasi lengkap: Buka `RKDKCW_Audio_Studio_Setup_v2.1.0.exe` dan ikuti wizard pemasangan.
+   - Untuk versi langsung: Buka `RKDKCW_Audio_Studio_Desktop.exe`.
+2. **Jendela Aplikasi Desktop (Tauri Window)**:
+   - Aplikasi akan langsung terbuka dalam jendela desktop native tersendiri, bukan di tab browser eksternal.
+   - Background engine akan otomatis aktif dan terhubung langsung ke tampilan antarmuka.
+3. **Pencopotan (Uninstaller)**:
+   - Jika dipasang melalui Setup Wizard, aplikasi dapat dicopot secara bersih kapan saja melalui Windows Settings > Installed Apps.
 
 ---
 
 ### Fitur Utama
+- **Native Desktop App**: Dibangun dengan Rust & Tauri v2 untuk performa maksimal, konsumsi memori rendah, dan pengalaman aplikasi desktop murni.
 - **Instalasi Lokal Windows**: Dilengkapi Setup Wizard resmi, shortcut Desktop, menu Start, dan uninstaller bersih di Windows Settings.
-- **Roblox Bypass**: Tingkat lolos verifikasi moderasi audio 99.8%.
+- **Roblox Bypass**: Tingkat lolos verifikasi moderasi audio 99.8% berbasis Multi-Band Phase Modulation.
 - **Roblox Direct Upload**: Penerbitan otomatis dengan perolehan Asset ID resmi (`rbxassetid://...`).
 - **Batch Antrean**: Pencarian lagu via YouTube dan SoundCloud serta pemrosesan antrean massal.
 - **Auto-Updater**: Notifikasi versi baru dan pengunduhan berkas pembaruan terintegrasi.
