@@ -1138,24 +1138,26 @@
     const checkEngine = async () => {
       attempts++;
       try {
-        const res = await fetch("http://127.0.0.1:5000/api/version", { cache: "no-store" });
+        const res = await fetch("http://127.0.0.1:5000/api/app/version", { cache: "no-store" });
         if (res.ok) {
           const frame = document.getElementById('studioFrame');
           frame.src = LOCAL_STUDIO_URL;
           frame.style.display = 'block';
           document.getElementById('btn-back-to-launcher').style.display = 'inline-flex';
+          actText.textContent = "Engine Ready · RKDKCW Studio v2.1.1";
           return;
         }
       } catch(e) {}
 
-      if (attempts < 30) {
-        setTimeout(checkEngine, 600);
+      if (attempts < 20) {
+        setTimeout(checkEngine, 200);
       } else {
-        // Fallback open in browser or frame directly
+        // Fallback open in frame directly
         const frame = document.getElementById('studioFrame');
         frame.src = LOCAL_STUDIO_URL;
         frame.style.display = 'block';
         document.getElementById('btn-back-to-launcher').style.display = 'inline-flex';
+        actText.textContent = "Engine Ready · RKDKCW Studio v2.1.1";
       }
     };
     checkEngine();

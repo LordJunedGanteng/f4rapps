@@ -1953,6 +1953,7 @@ def save_app_version_info(data):
         return False
 
 @app.route('/api/app/version', methods=['GET', 'POST'])
+@app.route('/api/version', methods=['GET'])
 def api_app_version():
     if request.method == 'POST':
         data = request.get_json(silent=True) or {}
