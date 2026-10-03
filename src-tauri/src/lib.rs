@@ -59,11 +59,54 @@ fn launch_backend_if_needed() {
     std::thread::sleep(Duration::from_millis(800));
 }
 
+#[tauri::command]
+fn app_minimize(window: tauri::Window) {
+    let _ = window.minimize();
+}
+
+#[tauri::command]
+fn app_toggle_maximize(window: tauri::Window) {
+    if window.is_maximized().unwrap_or(false) {
+        let _ = window.unmaximize();
+    } else {
+        let _ = window.maximize();
+    }
+}
+
+#[tauri::command]
+fn app_close(window: tauri::Window) {
+    let _ = window.close();
+}
+
+#[tauri::command]
+fn launch_studio_engine() -> Result<bool, String> {
+    launch_backend_if_needed();
+    Ok(true)
+}
+
+#[tauri::command]
+fn open_in_explorer(path: String) {
+    #[cfg(windows)]
+    {
+        let p = if path.is_empty() {
+            std::env::current_dir().unwrap_or_default()
+        } else {
+            std::path::PathBuf::from(path)
+        };
+        let _ = Command::new("explorer").arg(p).spawn();
+    }
+}
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
-    launch_backend_if_needed();
-
     tauri::Builder::default()
+        .invoke_handler(tauri::generate_handler![
+            app_minimize,
+            app_toggle_maximize,
+            app_close,
+            launch_studio_engine,
+            open_in_explorer
+        ])
         .setup(|app| {
             if cfg!(debug_assertions) {
                 app.handle().plugin(

@@ -1088,6 +1088,18 @@ def app_dashboard():
                            is_logged_in=is_logged_in,
                            rbx_user=rbx_user)
 
+@app.route('/launcher')
+def launcher_page():
+    frontend_dir = os.path.join(os.path.dirname(__file__), 'dist_frontend')
+    if os.path.isdir(frontend_dir):
+        return send_from_directory(frontend_dir, 'index.html')
+    return "Launcher frontend directory not found", 404
+
+@app.route('/launcher_bg.jpg')
+def launcher_bg_route():
+    frontend_dir = os.path.join(os.path.dirname(__file__), 'dist_frontend')
+    return send_from_directory(frontend_dir, 'launcher_bg.jpg')
+
 # ─────────────────────────────────────────────
 #  ADMIN PANEL
 # ─────────────────────────────────────────────

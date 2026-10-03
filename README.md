@@ -8,13 +8,13 @@ Studio Audio Bypass Roblox & Uploader Otomatis berbasis *Multi-Band Spectral Pha
 
 ### Download Aplikasi Desktop (.exe)
 
-Tersedia versi aplikasi desktop mandiri (Tauri Native Desktop Window) yang berjalan langsung di jendela aplikasi tersendiri tanpa membuka browser:
+Tersedia versi **Floating SaaS Launcher** mandiri (Tauri Native Desktop Window) yang berjalan langsung di jendela aplikasi tersendiri dengan deteksi otomatis pembaruan dari GitHub:
 
-[![Download Setup Installer](https://img.shields.io/badge/Download-RKDKCW__Audio__Studio__Setup__v2.1.1.exe-a855f7?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/LordJunedGanteng/f4rapps/releases/latest)
+[![Download Launcher](https://img.shields.io/badge/Download-RKDKCW__Launcher.exe_(9.2MB)-a855f7?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/LordJunedGanteng/f4rapps/releases/latest)
 
 > Opsi Unduhan:
-> - **Setup Installer Wizard**: `RKDKCW_Audio_Studio_Setup_v2.1.1.exe` (Pemasangan resmi, ikon Desktop & Start Menu, Uninstaller)
-> - **Portable Desktop App**: `RKDKCW_Audio_Studio_Desktop.exe` (Langsung jalan tanpa install)
+> - **Floating SaaS Launcher App**: `RKDKCW_Launcher.exe` (9.2 MB - Launcher utama untuk dibagikan, auto-detect update dari GitHub)
+> - **Setup Installer Wizard**: `RKDKCW_Audio_Studio_Setup_v2.1.1.exe` (Pemasangan offline lengkap, ikon Desktop & Start Menu, Uninstaller)
 > - **Halaman Rilis**: [Buka GitHub Releases](https://github.com/LordJunedGanteng/f4rapps/releases)
 
 ---

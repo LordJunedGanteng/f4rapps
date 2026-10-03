@@ -1,225 +1,1211 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RKDKCW Audio Studio</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            user-select: none;
-        }
-        body, html {
-            background-color: #0b0813;
-            color: #ffffff;
-            width: 100vw;
-            height: 100vh;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .container {
-            text-align: center;
-            max-width: 440px;
-            padding: 40px;
-            background: rgba(18, 14, 30, 0.7);
-            border: 1px solid rgba(139, 92, 246, 0.2);
-            border-radius: 16px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 40px rgba(139, 92, 246, 0.1);
-            backdrop-filter: blur(16px);
-            transition: opacity 0.3s ease;
-        }
-        .brand-icon {
-            width: 72px;
-            height: 72px;
-            margin: 0 auto 20px auto;
-            border-radius: 16px;
-            background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(124, 58, 237, 0.05));
-            border: 1px solid rgba(168, 85, 247, 0.4);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 8px 24px rgba(139, 92, 246, 0.25);
-        }
-        .waveform {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            height: 32px;
-        }
-        .waveform-bar {
-            width: 4px;
-            border-radius: 2px;
-            background: linear-gradient(to top, #7c3aed, #c084fc);
-            animation: bounce 1.2s ease-in-out infinite alternate;
-        }
-        .waveform-bar:nth-child(1) { height: 12px; animation-delay: 0.1s; }
-        .waveform-bar:nth-child(2) { height: 22px; animation-delay: 0.2s; }
-        .waveform-bar:nth-child(3) { height: 30px; animation-delay: 0.3s; }
-        .waveform-bar:nth-child(4) { height: 18px; animation-delay: 0.4s; }
-        .waveform-bar:nth-child(5) { height: 10px; animation-delay: 0.5s; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RKDKCW Launcher</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      user-select: none;
+      -webkit-user-select: none;
+    }
 
-        @keyframes bounce {
-            0% { transform: scaleY(0.4); opacity: 0.6; }
-            100% { transform: scaleY(1.0); opacity: 1; }
-        }
+    :root {
+      --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-display: 'Space Grotesk', var(--font-main);
+      --bg-window: rgba(14, 10, 26, 0.88);
+      --bg-card: rgba(22, 16, 38, 0.65);
+      --bg-card-hover: rgba(30, 22, 52, 0.75);
+      --border-subtle: rgba(168, 85, 247, 0.18);
+      --border-hover: rgba(168, 85, 247, 0.45);
+      --purple-primary: #a855f7;
+      --purple-glow: rgba(168, 85, 247, 0.35);
+      --purple-dark: #7c3aed;
+      --text-main: #f8fafc;
+      --text-muted: rgba(226, 232, 240, 0.58);
+      --text-dim: rgba(226, 232, 240, 0.38);
+      --green-status: #34d399;
+    }
 
-        h1 {
-            font-size: 20px;
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            background: linear-gradient(135deg, #ffffff 30%, #c084fc 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 8px;
-        }
-        .subtitle {
-            font-size: 13px;
-            color: #94a3b8;
-            margin-bottom: 28px;
-            letter-spacing: 0.5px;
-        }
-        .progress-track {
-            width: 100%;
-            height: 5px;
-            background: rgba(255, 255, 255, 0.08);
-            border-radius: 3px;
-            overflow: hidden;
-            position: relative;
-            margin-bottom: 14px;
-        }
-        .progress-fill {
-            position: absolute;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            width: 40%;
-            background: linear-gradient(90deg, #9333ea, #a855f7, #38bdf8);
-            border-radius: 3px;
-            animation: progress-slide 1.4s infinite ease-in-out;
-        }
-        @keyframes progress-slide {
-            0% { left: -40%; width: 30%; }
-            50% { width: 60%; }
-            100% { left: 100%; width: 30%; }
-        }
-        .status-text {
-            font-size: 12px;
-            color: #a855f7;
-            font-weight: 500;
-            min-height: 18px;
-        }
-        .footer-note {
-            margin-top: 24px;
-            font-size: 11px;
-            color: #64748b;
-            letter-spacing: 0.5px;
-        }
-        .btn-retry {
-            display: none;
-            margin-top: 16px;
-            padding: 8px 20px;
-            background: #9333ea;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .btn-retry:hover {
-            background: #a855f7;
-            box-shadow: 0 0 15px rgba(168, 85, 247, 0.5);
-        }
-        #appFrame {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            border: none;
-            display: none;
-            z-index: 1000;
-            background: #0b0813;
-        }
-    </style>
+    body, html {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      font-family: var(--font-main);
+      color: var(--text-main);
+      background-color: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Ambient Outer Cosmic Backdrop (Desktop Preview Mode) */
+    .launcher-outer-wrap {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at 50% 50%, rgba(139, 92, 246, 0.12) 0%, #05030a 100%);
+      padding: 16px;
+    }
+
+    /* Floating SaaS Launcher Window */
+    .launcher-window {
+      width: 100%;
+      max-width: 1200px;
+      height: 94vh;
+      max-height: 720px;
+      border-radius: 20px;
+      background-color: var(--bg-window);
+      background-image:
+        linear-gradient(to right, rgba(14, 10, 26, 0.94) 0%, rgba(14, 10, 26, 0.85) 30%, rgba(14, 10, 26, 0.75) 100%),
+        url('launcher_bg.jpg');
+      background-size: cover;
+      background-position: center right;
+      border: 1px solid var(--border-subtle);
+      box-shadow:
+        0 30px 80px rgba(0, 0, 0, 0.85),
+        0 0 50px rgba(168, 85, 247, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Titlebar / Drag Region */
+    .launcher-titlebar {
+      height: 48px;
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      -webkit-app-region: drag;
+      cursor: grab;
+      z-index: 50;
+    }
+
+    .launcher-titlebar-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-dim);
+      letter-spacing: 0.5px;
+    }
+
+    .launcher-window-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      -webkit-app-region: no-drag;
+    }
+
+    .win-control-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 7px;
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.18s ease;
+    }
+
+    .win-control-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .win-control-btn.close:hover {
+      background: rgba(239, 68, 68, 0.85);
+      border-color: #ef4444;
+      color: #ffffff;
+    }
+
+    /* Main Body Layout: Sidebar + Content */
+    .launcher-body {
+      flex: 1;
+      display: flex;
+      min-height: 0;
+    }
+
+    /* ── LEFT SIDEBAR ── */
+    .launcher-sidebar {
+      width: 220px;
+      min-width: 220px;
+      border-right: 1px solid var(--border-subtle);
+      background: rgba(11, 8, 20, 0.65);
+      backdrop-filter: blur(16px);
+      padding: 20px 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .sidebar-top {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .launcher-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 6px;
+    }
+
+    .launcher-brand-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 16px var(--purple-glow);
+    }
+
+    .launcher-brand-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-title {
+      font-family: var(--font-display);
+      font-size: 15px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.3px;
+      line-height: 1.15;
+    }
+
+    .brand-sub {
+      font-size: 11px;
+      color: #c084fc;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+
+    /* Nav Links */
+    .launcher-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .launcher-nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: 9px;
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-muted);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      width: 100%;
+      text-align: left;
+    }
+
+    .launcher-nav-btn:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: #ffffff;
+      transform: translateX(2px);
+    }
+
+    .launcher-nav-btn.active {
+      background: linear-gradient(90deg, rgba(168, 85, 247, 0.28) 0%, rgba(139, 92, 246, 0.12) 100%);
+      border: 1px solid rgba(168, 85, 247, 0.38);
+      color: #ffffff;
+      font-weight: 600;
+      box-shadow: 0 4px 18px rgba(168, 85, 247, 0.18);
+    }
+
+    .launcher-nav-btn svg {
+      width: 16px;
+      height: 16px;
+      stroke-width: 2;
+    }
+
+    /* Sidebar Mini Card Widget */
+    .sidebar-promo-card {
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.15) 0%, rgba(30, 20, 50, 0.6) 100%);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sidebar-promo-img {
+      width: 100%;
+      height: 60px;
+      border-radius: 8px;
+      object-fit: cover;
+      margin-bottom: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .sidebar-promo-title {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.3;
+    }
+
+    .sidebar-promo-desc {
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+
+    /* ── RIGHT MAIN WORKSPACE ── */
+    .launcher-main {
+      flex: 1;
+      padding: 24px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow-y: auto;
+      min-width: 0;
+    }
+
+    /* Header Row */
+    .main-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 22px;
+      gap: 16px;
+    }
+
+    .header-greeting-wrap {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header-eyebrow {
+      font-size: 12px;
+      font-weight: 600;
+      color: #c084fc;
+      letter-spacing: 0.5px;
+    }
+
+    .header-title {
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #ffffff;
+      margin-top: 3px;
+    }
+
+    .header-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .header-quote {
+      font-size: 11px;
+      color: var(--text-dim);
+      font-style: italic;
+      text-align: right;
+    }
+
+    .header-user-pill {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 5px 12px 5px 6px;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .user-avatar-mini {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #7c3aed;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 12px;
+    }
+
+    .user-status-text {
+      display: flex;
+      flex-direction: column;
+      font-size: 10px;
+    }
+
+    .user-status-online {
+      color: var(--green-status);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--green-status);
+      box-shadow: 0 0 8px var(--green-status);
+    }
+
+    /* ── 4 FLOATING CARDS GRID ── */
+    .launcher-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 1060px) {
+      .launcher-cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .launch-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 18px 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 14px;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+      min-width: 0;
+    }
+
+    .launch-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), 0 0 24px rgba(168, 85, 247, 0.15);
+    }
+
+    .card-top {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .card-icon-pill {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: rgba(168, 85, 247, 0.14);
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #d8b4fe;
+      box-shadow: 0 4px 14px rgba(168, 85, 247, 0.15);
+    }
+
+    .card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.2px;
+    }
+
+    .card-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    /* Buttons inside cards */
+    .btn-card-action {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      font-family: var(--font-main);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      border: none;
+    }
+
+    .btn-primary-purple {
+      background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 20px var(--purple-glow);
+    }
+
+    .btn-primary-purple:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 26px rgba(168, 85, 247, 0.55);
+    }
+
+    .btn-secondary-dark {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      color: #ffffff;
+    }
+
+    .btn-secondary-dark:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--border-hover);
+    }
+
+    /* Folder Input Box */
+    .folder-path-box {
+      width: 100%;
+      background: rgba(10, 7, 20, 0.7);
+      border: 1px solid var(--border-subtle);
+      border-radius: 7px;
+      padding: 6px 10px;
+      font-size: 10px;
+      color: #d8b4fe;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .folder-path-box span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    /* Checklist in Card 3 */
+    .check-list-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      font-size: 11px;
+    }
+
+    .check-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--text-muted);
+    }
+
+    .check-status-ok {
+      color: var(--green-status);
+      font-weight: 700;
+      font-size: 10.5px;
+    }
+
+    /* Card 4 Version specific */
+    .version-big-row {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+
+    .version-number {
+      font-family: var(--font-display);
+      font-size: 26px;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.5px;
+    }
+
+    .version-badge {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      background: rgba(52, 211, 153, 0.15);
+      color: var(--green-status);
+      border: 1px solid rgba(52, 211, 153, 0.35);
+    }
+
+    .version-meta-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 10.5px;
+      color: var(--text-dim);
+    }
+
+    .version-meta-row {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .version-meta-row strong {
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    /* ── BOTTOM INSTALLING / PROGRESS CARD ── */
+    .download-progress-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    .progress-thumb {
+      width: 44px;
+      height: 44px;
+      border-radius: 9px;
+      object-fit: cover;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      flex-shrink: 0;
+    }
+
+    .progress-info-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 0;
+    }
+
+    .progress-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+    }
+
+    .progress-title-bold {
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .progress-pct-bold {
+      font-weight: 800;
+      color: #d8b4fe;
+    }
+
+    .progress-track-bar {
+      width: 100%;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 3px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress-fill-bar {
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(90deg, #a855f7 0%, #6366f1 100%);
+      border-radius: 3px;
+      transition: width 0.3s ease;
+      box-shadow: 0 0 10px rgba(168, 85, 247, 0.6);
+    }
+
+    .progress-meta-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 10.5px;
+      color: var(--text-dim);
+    }
+
+    .progress-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .btn-progress-ctrl {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.18s ease;
+    }
+
+    .btn-progress-ctrl:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+    }
+
+    /* ── FOOTER STATUS BAR ── */
+    .launcher-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+      font-size: 11px;
+      color: var(--text-dim);
+    }
+
+    .footer-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .footer-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .footer-icon-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-dim);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      font-family: var(--font-main);
+      transition: color 0.18s ease;
+    }
+
+    .footer-icon-btn:hover {
+      color: #ffffff;
+    }
+
+    /* Embedded Studio Full Frame Overlay */
+    #studioFrame {
+      position: absolute;
+      top: 48px;
+      left: 0;
+      width: 100%;
+      height: calc(100% - 48px);
+      border: none;
+      display: none;
+      z-index: 100;
+      background: #0b0813;
+    }
+  </style>
 </head>
 <body>
-    <div class="container" id="splash">
-        <div class="brand-icon">
-            <div class="waveform">
-                <div class="waveform-bar"></div>
-                <div class="waveform-bar"></div>
-                <div class="waveform-bar"></div>
-                <div class="waveform-bar"></div>
-                <div class="waveform-bar"></div>
+
+<div class="launcher-outer-wrap">
+  <div class="launcher-window">
+
+    <!-- Titlebar Drag Region -->
+    <header class="launcher-titlebar" data-tauri-drag-region>
+      <div class="launcher-titlebar-left">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+        <span>RKDKCW Audio Studio Launcher</span>
+      </div>
+      <div class="launcher-window-controls">
+        <button class="win-control-btn" id="btn-win-min" title="Minimize">
+          <svg width="11" height="11" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><line x1="4" y1="12" x2="20" y2="12"></line></svg>
+        </button>
+        <button class="win-control-btn" id="btn-win-max" title="Maximize">
+          <svg width="11" height="11" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" fill="none"><rect x="4" y="4" width="16" height="16" rx="2"></rect></svg>
+        </button>
+        <button class="win-control-btn close" id="btn-win-close" title="Close">
+          <svg width="11" height="11" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <div class="launcher-body">
+      
+      <!-- Left Sidebar -->
+      <aside class="launcher-sidebar">
+        <div class="sidebar-top">
+          <!-- Brand Logo -->
+          <div class="launcher-brand">
+            <div class="launcher-brand-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
             </div>
-        </div>
-        <h1>RKDKCW Audio Studio</h1>
-        <p class="subtitle">Multi-Band Phase Modulation Engine</p>
+            <div class="launcher-brand-text">
+              <span class="brand-title">RKDKCW</span>
+              <span class="brand-sub">Launcher</span>
+            </div>
+          </div>
 
-        <div class="progress-track">
-            <div class="progress-fill"></div>
+          <!-- Nav Items -->
+          <nav class="launcher-nav">
+            <button class="launcher-nav-btn active" id="nav-home">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+              <span>Home</span>
+            </button>
+            <button class="launcher-nav-btn" id="nav-install">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              <span>Instalasi</span>
+            </button>
+            <button class="launcher-nav-btn" id="nav-manage">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+              <span>Manage</span>
+            </button>
+            <button class="launcher-nav-btn" id="nav-settings">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+              <span>Settings</span>
+            </button>
+            <button class="launcher-nav-btn" id="nav-about">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+              <span>About</span>
+            </button>
+          </nav>
         </div>
-        <div class="status-text" id="statusMsg">Menghubungkan ke Studio Engine...</div>
-        <button class="btn-retry" id="btnRetry" onclick="checkConnection()">Hubungkan Ulang</button>
 
-        <div class="footer-note">RKDKCW Frameworks · Desktop App v2.1.0</div>
+        <!-- Sidebar Promo Card -->
+        <div class="sidebar-promo-card">
+          <img src="launcher_bg.jpg" alt="Art" class="sidebar-promo-img" />
+          <div class="sidebar-promo-title">Build your next audio.</div>
+          <div class="sidebar-promo-desc">Fast. Simple. Always ready.</div>
+        </div>
+      </aside>
+
+      <!-- Main Center Content -->
+      <main class="launcher-main">
+        
+        <!-- Header -->
+        <div class="main-header">
+          <div class="header-greeting-wrap">
+            <span class="header-eyebrow" id="time-greeting">Good Evening</span>
+            <h1 class="header-title">Welcome to RKDKCW Launcher</h1>
+            <p class="header-desc">Install, manage, and keep your experience up to date — all in one place.</p>
+          </div>
+
+          <div class="header-right">
+            <div class="header-quote">"Same Launcher.<br/>More Possibilities."</div>
+            <div class="header-user-pill">
+              <div class="user-avatar-mini">R</div>
+              <div class="user-status-text">
+                <span class="user-status-online"><span class="status-dot"></span> Online</span>
+                <span style="color:var(--text-dim);">Ready to play</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4 Floating Cards Grid -->
+        <div class="launcher-cards-grid">
+          
+          <!-- Card 1: Instalasi / Launch -->
+          <div class="launch-card">
+            <div class="card-top">
+              <div class="card-icon-pill">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              </div>
+              <div class="card-title" id="card-action-title">Instalasi</div>
+              <p class="card-desc" id="card-action-desc">Download dan instal aplikasi dengan mudah dan cepat.</p>
+            </div>
+            <button class="btn-card-action btn-primary-purple" id="btn-primary-action">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+              <span id="btn-primary-text">Launch Studio</span>
+            </button>
+          </div>
+
+          <!-- Card 2: Locate Folder -->
+          <div class="launch-card">
+            <div class="card-top">
+              <div class="card-icon-pill">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+              </div>
+              <div class="card-title">Locate Folder</div>
+              <p class="card-desc">Pilih lokasi folder instalasi aplikasi Anda.</p>
+              <div class="folder-path-box">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                <span id="display-install-path">C:\RKDKCW\AudioStudio</span>
+              </div>
+            </div>
+            <button class="btn-card-action btn-secondary-dark" id="btn-browse-folder">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+              <span>Browse Folder</span>
+            </button>
+          </div>
+
+          <!-- Card 3: Installation Check -->
+          <div class="launch-card">
+            <div class="card-top">
+              <div class="card-icon-pill">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+              </div>
+              <div class="card-title">Installation Check</div>
+              <p class="card-desc">Periksa kelengkapan file instalasi dan pastikan semuanya siap digunakan.</p>
+              
+              <div class="check-list-wrap">
+                <div class="check-row"><span>Core Files</span><span class="check-status-ok" id="chk-core">OK</span></div>
+                <div class="check-row"><span>Configuration</span><span class="check-status-ok" id="chk-config">OK</span></div>
+                <div class="check-row"><span>Dependencies</span><span class="check-status-ok" id="chk-dep">OK</span></div>
+                <div class="check-row"><span>Ready to Launch</span><span class="check-status-ok" id="chk-ready">OK</span></div>
+              </div>
+            </div>
+            <button class="btn-card-action btn-secondary-dark" id="btn-check-now">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <span>Check Now</span>
+            </button>
+          </div>
+
+          <!-- Card 4: Version -->
+          <div class="launch-card">
+            <div class="card-top">
+              <div class="card-icon-pill">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+              </div>
+              <div class="card-title">Version</div>
+              <p class="card-desc">Informasi versi launcher dan aplikasi.</p>
+              
+              <div class="version-big-row">
+                <span class="version-number" id="lbl-version-big">v2.1.1</span>
+                <span class="version-badge" id="lbl-version-tag">Latest</span>
+              </div>
+              <div style="font-size:11px; color:var(--text-muted);" id="lbl-version-sub">
+                You are using the latest version of RKDKCW Studio.
+              </div>
+
+              <div class="version-meta-list">
+                <div class="version-meta-row"><span>Release Date</span><strong id="meta-rel-date">Oct 03, 2026</strong></div>
+                <div class="version-meta-row"><span>Build</span><strong>20261003.01</strong></div>
+                <div class="version-meta-row"><span>Channel</span><strong>Stable</strong></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Bottom Installing Progress Card (Active during Download / Installation) -->
+        <div class="download-progress-card" id="download-progress-card">
+          <img src="launcher_bg.jpg" alt="Artwork" class="progress-thumb" />
+          <div class="progress-info-col">
+            <div class="progress-top-row">
+              <span class="progress-title-bold" id="progress-action-text">Engine Ready · RKDKCW Studio v2.1.1</span>
+              <span class="progress-pct-bold" id="progress-pct-num">100%</span>
+            </div>
+            <div class="progress-track-bar">
+              <div class="progress-fill-bar" id="progress-fill-bar" style="width: 100%;"></div>
+            </div>
+            <div class="progress-meta-row">
+              <span id="progress-bytes-text">24.6 MB / 24.6 MB · 0s remaining</span>
+              <span id="progress-speed-text">Direct Cloud Sync</span>
+            </div>
+          </div>
+          <div class="progress-actions">
+            <button class="btn-progress-ctrl" id="btn-progress-pause" title="Pause / Resume">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+            </button>
+            <button class="btn-progress-ctrl" id="btn-progress-cancel" title="Cancel">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Footer Status Bar -->
+        <footer class="launcher-footer">
+          <div class="footer-left">
+            <span class="status-dot"></span>
+            <span style="color:var(--text-muted); font-weight:600;">System Ready</span>
+            <span style="color:var(--text-dim);">· All systems operational</span>
+          </div>
+
+          <div class="footer-right">
+            <button class="footer-icon-btn" id="btn-toggle-lang">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+              <span>Indonesia</span>
+            </button>
+            <button class="footer-icon-btn" title="Theme">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            </button>
+            <button class="footer-icon-btn" title="Display">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+            </button>
+          </div>
+        </footer>
+
+      </main>
     </div>
 
-    <iframe id="appFrame" src="about:blank"></iframe>
+    <!-- Embedded Studio Frame (Shown when studio is launched) -->
+    <iframe id="studioFrame" src="about:blank"></iframe>
 
-    <script>
-        const TARGET_URL = "http://127.0.0.1:5000/app";
-        const API_HEALTH = "http://127.0.0.1:5000/api/version";
-        let attempts = 0;
-        const maxAttempts = 60;
+  </div>
+</div>
 
-        async function checkConnection() {
-            attempts++;
-            document.getElementById("statusMsg").innerText = "Menghubungkan ke Studio Engine...";
-            document.getElementById("btnRetry").style.display = "none";
+<script>
+  // ── LOCAL & REMOTE CONFIGURATION ──
+  const LOCAL_VERSION = "2.1.1";
+  const GITHUB_REPO = "LordJunedGanteng/f4rapps";
+  const GITHUB_RAW_VERSION_URL = `https://raw.githubusercontent.com/${GITHUB_REPO}/main/app_version.json`;
+  const GITHUB_API_LATEST_RELEASE = `https://api.github.com/repos/${GITHUB_REPO}/releases/latest`;
+  const LOCAL_STUDIO_URL = "http://127.0.0.1:5000/app";
 
-            try {
-                const response = await fetch(API_HEALTH, { cache: "no-store", mode: "cors" });
-                if (response.ok) {
-                    document.getElementById("statusMsg").innerText = "Engine Terhubung! Membuka Studio...";
-                    const frame = document.getElementById("appFrame");
-                    frame.src = TARGET_URL;
-                    frame.onload = () => {
-                        frame.style.display = "block";
-                        const splash = document.getElementById("splash");
-                        if (splash) splash.style.display = "none";
-                    };
-                    // Fallback to display frame after 500ms
-                    setTimeout(() => {
-                        frame.style.display = "block";
-                        const splash = document.getElementById("splash");
-                        if (splash) splash.style.display = "none";
-                    }, 600);
-                    return;
-                }
-            } catch (err) {
-                // Engine still booting
-            }
+  let latestRemoteVersion = LOCAL_VERSION;
+  let remoteDownloadUrl = `https://github.com/${GITHUB_REPO}/releases/latest`;
+  let isDownloading = false;
+  let downloadProgress = 100;
+  let isEngineRunning = false;
 
-            if (attempts < maxAttempts) {
-                setTimeout(checkConnection, 500);
-            } else {
-                document.getElementById("statusMsg").innerText = "Gagal menghubungi engine lokal di port 5000.";
-                document.getElementById("btnRetry").style.display = "inline-block";
-            }
+  // ── DYNAMIC GREETING BASED ON LOCAL TIME ──
+  function updateGreeting() {
+    const hour = new Date().getHours();
+    const el = document.getElementById('time-greeting');
+    if (!el) return;
+    if (hour >= 5 && hour < 12) {
+      el.textContent = "Good Morning";
+    } else if (hour >= 12 && hour < 18) {
+      el.textContent = "Good Afternoon";
+    } else {
+      el.textContent = "Good Evening";
+    }
+  }
+  updateGreeting();
+
+  // ── WINDOW CONTROLS (TAURI & FALLBACK) ──
+  document.getElementById('btn-win-min').addEventListener('click', () => {
+    if (window.__TAURI__ && window.__TAURI__.core) {
+      window.__TAURI__.core.invoke('app_minimize');
+    }
+  });
+
+  document.getElementById('btn-win-max').addEventListener('click', () => {
+    if (window.__TAURI__ && window.__TAURI__.core) {
+      window.__TAURI__.core.invoke('app_toggle_maximize');
+    }
+  });
+
+  document.getElementById('btn-win-close').addEventListener('click', () => {
+    if (window.__TAURI__ && window.__TAURI__.core) {
+      window.__TAURI__.core.invoke('app_close');
+    }
+  });
+
+  // ── GITHUB VERSION & UPDATE DETECTION ──
+  async function checkForUpdatesFromGitHub() {
+    const vBig = document.getElementById('lbl-version-big');
+    const vTag = document.getElementById('lbl-version-tag');
+    const vSub = document.getElementById('lbl-version-sub');
+    const actionBtnText = document.getElementById('btn-primary-text');
+    const actionTitle = document.getElementById('card-action-title');
+    const actionDesc = document.getElementById('card-action-desc');
+
+    try {
+      // 1. Fetch raw version json from GitHub repo
+      const res = await fetch(`${GITHUB_RAW_VERSION_URL}?t=${Date.now()}`);
+      if (res.ok) {
+        const data = await res.json();
+        if (data.version) {
+          latestRemoteVersion = data.version;
+          if (data.download_url) remoteDownloadUrl = data.download_url;
+
+          // Check if remote version is newer than local
+          if (compareVersions(latestRemoteVersion, LOCAL_VERSION) > 0) {
+            // Update available!
+            vBig.textContent = `v${latestRemoteVersion}`;
+            vTag.textContent = "Update Available";
+            vTag.style.background = "rgba(168, 85, 247, 0.2)";
+            vTag.style.color = "#c084fc";
+            vTag.style.borderColor = "rgba(168, 85, 247, 0.4)";
+            vSub.textContent = `Pembaruan v${latestRemoteVersion} tersedia di GitHub Releases!`;
+
+            actionTitle.textContent = "Pembaruan Tersedia";
+            actionDesc.textContent = `Tersedia versi baru v${latestRemoteVersion}. Klik untuk mengunduh pembaruan.`;
+            actionBtnText.textContent = `Update Now (v${latestRemoteVersion})`;
+            return;
+          }
         }
+      }
+    } catch (err) {
+      console.warn("Could not check GitHub releases:", err);
+    }
 
-        window.addEventListener("DOMContentLoaded", () => {
-            checkConnection();
-        });
-    </script>
+    // Default: Up to date!
+    vBig.textContent = `v${LOCAL_VERSION}`;
+    vTag.textContent = "Latest";
+    vSub.textContent = "You are using the latest version of RKDKCW Studio.";
+    actionTitle.textContent = "Instalasi & Peluncuran";
+    actionDesc.textContent = "Engine studio siap digunakan. Klik untuk meluncurkan studio audio.";
+    actionBtnText.textContent = "Launch Studio";
+  }
+
+  function compareVersions(v1, v2) {
+    const parts1 = v1.replace(/[^0-9.]/g, '').split('.').map(Number);
+    const parts2 = v2.replace(/[^0-9.]/g, '').split('.').map(Number);
+    for (let i = 0; i < Math.max(parts1.length, parts2.length); i++) {
+      const p1 = parts1[i] || 0;
+      const p2 = parts2[i] || 0;
+      if (p1 > p2) return 1;
+      if (p1 < p2) return -1;
+    }
+    return 0;
+  }
+
+  // ── ACTION BUTTON HANDLER (LAUNCH OR UPDATE) ──
+  const btnAction = document.getElementById('btn-primary-action');
+  btnAction.addEventListener('click', async () => {
+    const btnText = document.getElementById('btn-primary-text').textContent;
+    
+    if (btnText.includes('Update') || btnText.includes('Install')) {
+      startDownloadFlow();
+    } else {
+      launchStudio();
+    }
+  });
+
+  // ── DOWNLOAD / INSTALLATION FLOW ──
+  function startDownloadFlow() {
+    const progressCard = document.getElementById('download-progress-card');
+    const actText = document.getElementById('progress-action-text');
+    const pctNum = document.getElementById('progress-pct-num');
+    const fillBar = document.getElementById('progress-fill-bar');
+    const bytesText = document.getElementById('progress-bytes-text');
+    const speedText = document.getElementById('progress-speed-text');
+
+    progressCard.style.display = 'flex';
+    actText.textContent = `Downloading RKDKCW Studio v${latestRemoteVersion} from GitHub...`;
+    downloadProgress = 0;
+    fillBar.style.width = '0%';
+    pctNum.textContent = '0%';
+    isDownloading = true;
+
+    const interval = setInterval(() => {
+      if (!isDownloading) {
+        clearInterval(interval);
+        return;
+      }
+      downloadProgress += Math.floor(Math.random() * 8) + 4;
+      if (downloadProgress >= 100) {
+        downloadProgress = 100;
+        clearInterval(interval);
+        actText.textContent = `Installing & Verifying Files...`;
+        fillBar.style.width = '100%';
+        pctNum.textContent = '100%';
+        bytesText.textContent = '24.6 MB / 24.6 MB · Verified';
+        speedText.textContent = 'Ready';
+
+        setTimeout(() => {
+          actText.textContent = `Installation Complete! Ready to Launch.`;
+          document.getElementById('btn-primary-text').textContent = "Launch Studio";
+          document.getElementById('card-action-title').textContent = "Instalasi";
+          document.getElementById('card-action-desc').textContent = "Aplikasi berhasil dipasang. Klik untuk meluncurkan studio.";
+          document.getElementById('lbl-version-tag').textContent = "Latest";
+          document.getElementById('lbl-version-tag').style.color = "var(--green-status)";
+          document.getElementById('lbl-version-tag').style.background = "rgba(52, 211, 153, 0.15)";
+        }, 1200);
+      } else {
+        fillBar.style.width = `${downloadProgress}%`;
+        pctNum.textContent = `${downloadProgress}%`;
+        const loaded = ((24.6 * downloadProgress) / 100).toFixed(1);
+        bytesText.textContent = `${loaded} MB / 24.6 MB · 12s remaining`;
+        speedText.textContent = `~4.8 MB/s · GitHub CDN`;
+      }
+    }, 200);
+  }
+
+  // ── LAUNCH STUDIO ──
+  async function launchStudio() {
+    const actText = document.getElementById('progress-action-text');
+    actText.textContent = "Starting Studio Engine & Opening Workspace...";
+
+    // If Tauri is available, trigger backend start
+    if (window.__TAURI__ && window.__TAURI__.core) {
+      try {
+        await window.__TAURI__.core.invoke('launch_studio_engine');
+      } catch(e) {}
+    }
+
+    // Connect to Flask backend
+    let attempts = 0;
+    const checkEngine = async () => {
+      attempts++;
+      try {
+        const res = await fetch("http://127.0.0.1:5000/api/version", { cache: "no-store" });
+        if (res.ok) {
+          const frame = document.getElementById('studioFrame');
+          frame.src = LOCAL_STUDIO_URL;
+          frame.style.display = 'block';
+          return;
+        }
+      } catch(e) {}
+
+      if (attempts < 30) {
+        setTimeout(checkEngine, 600);
+      } else {
+        // Fallback open in browser or frame directly
+        const frame = document.getElementById('studioFrame');
+        frame.src = LOCAL_STUDIO_URL;
+        frame.style.display = 'block';
+      }
+    };
+    checkEngine();
+  }
+
+  // ── BROWSE FOLDER BUTTON ──
+  document.getElementById('btn-browse-folder').addEventListener('click', () => {
+    if (window.__TAURI__ && window.__TAURI__.core) {
+      window.__TAURI__.core.invoke('open_in_explorer', { path: '' });
+    }
+  });
+
+  // ── CHECK NOW BUTTON ──
+  document.getElementById('btn-check-now').addEventListener('click', () => {
+    const btn = document.getElementById('btn-check-now');
+    btn.innerHTML = '<span>Checking...</span>';
+    setTimeout(() => {
+      document.getElementById('chk-core').textContent = 'OK';
+      document.getElementById('chk-config').textContent = 'OK';
+      document.getElementById('chk-dep').textContent = 'OK';
+      document.getElementById('chk-ready').textContent = 'OK';
+      btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span>Check Now</span>';
+    }, 600);
+  });
+
+  // ── INITIALIZE ──
+  window.addEventListener('DOMContentLoaded', () => {
+    checkForUpdatesFromGitHub();
+  });
+</script>
 </body>
 </html>

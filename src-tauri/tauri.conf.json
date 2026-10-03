@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "RKDKCW Audio Studio",
+  "productName": "RKDKCW Launcher",
   "version": "2.1.1",
-  "identifier": "com.rkdkcw.audiostudio",
+  "identifier": "com.rkdkcw.launcher",
   "build": {
     "frontendDist": "../dist_frontend"
   },
@@ -10,12 +10,14 @@
     "windows": [
       {
         "label": "main",
-        "title": "RKDKCW Audio Studio",
-        "url": "http://127.0.0.1:5000/app",
-        "width": 1320,
-        "height": 840,
-        "minWidth": 1000,
-        "minHeight": 650,
+        "title": "RKDKCW Launcher",
+        "url": "index.html",
+        "width": 1240,
+        "height": 760,
+        "minWidth": 1020,
+        "minHeight": 640,
+        "decorations": false,
+        "transparent": true,
         "resizable": true,
         "fullscreen": false,
         "center": true,

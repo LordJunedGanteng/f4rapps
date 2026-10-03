@@ -2532,7 +2532,7 @@ dependencies = [
 
 [[package]]
 name = "rkdkcw-audio-studio"
-version = "2.1.0"
+version = "2.1.1"
 dependencies = [
  "log",
  "serde",
